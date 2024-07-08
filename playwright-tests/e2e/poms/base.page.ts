@@ -1,5 +1,3 @@
-//base.page.ts
-
 import { Locator, Page, expect } from "@playwright/test";
 
 export default class BasePage {
@@ -66,72 +64,6 @@ export default class BasePage {
     } catch (error) {
       throw new Error(
         `Failed to get text from element with testId: ${testId}. Error: ${error}`
-      );
-    }
-  }
-
-  async assertTextContains(actualText: string, expectedText: string): Promise<void> {
-    try {
-      expect(actualText).toContain(expectedText);
-    } catch (error) {
-      throw new Error(
-        `Failed: Expected '${expectedText}' to be contained in Actual '${actualText}'`
-      );
-    }
-  }
-
-  async assertTextEqual(actualText: string, expectedText: string): Promise<void> {
-    try {
-      expect(actualText).toEqual(expectedText);
-    } catch (error) {
-      throw new Error(
-        `Failed: Expected '${expectedText}' but got '${actualText}'`
-      );
-    }
-  }
-
-  async assertEqual(actualText: any, expectedText: any): Promise<void> {
-    try {
-      expect(actualText).toEqual(expectedText);
-    } catch (error) {
-      throw new Error(
-        `Failed: Expected '${expectedText}' but got '${actualText}'`
-      );
-    }
-  }
-
-  async assertGreaterThanEqualTo(actNum: any, expNum: any): Promise<void> {
-    try {
-      expect(actNum).toBeGreaterThanOrEqual(expNum);
-    } catch (error) {
-      throw new Error(
-        `Failed: '${actNum}' toBeGreaterThanOrEqual '${expNum}'`
-      );
-    }
-  }
-
-  async assertElementCountGreaterThan(testId: string, count: number, timeoutInSeconds: number = 10): Promise<void> {
-    try {
-      await this.waitForElementToBeVisible(testId, timeoutInSeconds);
-      const elements = this.page.getByTestId(testId)
-      const cnt = await elements.count();
-      expect(cnt).toBeGreaterThan(count);
-    } catch (error) {
-      throw new Error(
-        `Failed to assert element count for testId '${testId}'. Error: ${error}`
-      );
-    }
-  }
-
-  async assertElementCountEqualTo(testId: string, count: number, timeoutInSeconds: number = 10): Promise<void> {
-    try {
-      await this.waitForElementToBeVisible(testId, timeoutInSeconds);
-      const elements = this.page.getByTestId(testId)
-      const cnt = await elements.count();
-      expect(cnt).toBe(count);
-    } catch (error) {
-      throw new Error(
-        `Failed to assert element count for testId '${testId}'. Error: ${error}`
       );
     }
   }
