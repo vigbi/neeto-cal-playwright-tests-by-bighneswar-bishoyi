@@ -68,4 +68,14 @@ export default class BasePage {
     }
   }
 
+  async assertTextContains(actualText: string, expectedText: string): Promise<void> {
+    try {
+      expect(actualText).toContain(expectedText);
+    } catch (error) {
+      throw new Error(
+        `Failed: Expected '${expectedText}' to be contained in Actual '${actualText}'`
+      );
+    }
+  }
+
 }
