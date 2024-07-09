@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page,expect } from '@playwright/test';
 import BasePage from './base.page';
 
 enum Selectors {
@@ -28,7 +28,7 @@ export default class MeetingPage extends BasePage {
       const linkElement = this.page.locator(selector);
       return linkElement;
     } catch (error) {
-      console.error(`Failed to get link with href containing '${meetingType}': ${error}`);
+      console.error(`Failed to get link : ${error}`);
       return null;
     }
   }
@@ -73,5 +73,9 @@ export default class MeetingPage extends BasePage {
     } catch (error) {
       console.error(`Failed to create new meeting or verify details: ${error}`);
     }
+  }
+
+  async assertTextContains(actualText: string, expectedText: string): Promise<void> {
+      expect(actualText).toContain(expectedText);
   }
 }
