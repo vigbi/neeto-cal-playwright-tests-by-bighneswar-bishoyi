@@ -68,4 +68,6 @@ export default class BasePage {
     }
   }
 
+  
+
 }

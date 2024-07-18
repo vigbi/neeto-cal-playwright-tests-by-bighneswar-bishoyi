@@ -1,12 +1,16 @@
 import test, { expect } from '@playwright/test';
 
 import LoginPage from '../poms/login.page';
-import { faker } from '@faker-js/faker';
+import MeetingPage from '../poms/meeting.page';
+import { faker } from "@faker-js/faker";        
 
-test.describe('Logging in Tests', () => {
+
+test.describe('Meeting Tests', () => {
   let loginPage: LoginPage
+  let meetingPage: MeetingPage
   test.beforeEach(async ({ page }, testInfo) => {
     loginPage = new LoginPage(page);
+    meetingPage = new MeetingPage(page)
     await page.goto('/admin');
     if (!testInfo.title.includes('SKIPLOGIN')) {
     
@@ -14,10 +18,19 @@ test.describe('Logging in Tests', () => {
     }
   });
 
+  test.slow(); 
+
   test('Verify Login', async ({ page }) => {
-    expect(await loginPage.profileIconIsVisible(20)).toBe(true);
+    expect(await meetingPage.profileIconIsVisible(20)).toBe(true);
   });
 
+  test('Verify Create a new One-on-One meeting', async ({ page }) => {
+    expect(await meetingPage.profileIconIsVisible(40)).toBe(true);
+    const meetingName: string = faker.commerce.productName()
+    const meetingLink: string = meetingName.trim().toLowerCase().replace(/\s+/g, '-');
+    const meetingDesc: string = faker.lorem.paragraph();
+    await meetingPage.createNewMeeting("one_on_one", meetingName, meetingLink, meetingDesc)
 
+  });
 
 });
