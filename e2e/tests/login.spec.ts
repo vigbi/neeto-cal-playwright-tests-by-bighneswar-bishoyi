@@ -40,7 +40,7 @@ test.describe('Meeting Tests', () => {
     const meetingDesc: string = faker.lorem.paragraph();
     const newMeetingPage: Page = await meetingPage.createNewMeeting("one_on_one", meetingName, meetingLink, meetingDesc);
     const clientName: string = faker.person.firstName()
-    const email: string = clientName + "@sample.com"
+    const email: string = clientName + "@sample.com";
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 2);
     const day = currentDate.toLocaleString('en-US', { month: 'long', day: 'numeric' });
