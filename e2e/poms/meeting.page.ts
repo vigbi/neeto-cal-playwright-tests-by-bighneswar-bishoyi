@@ -1,4 +1,4 @@
-import { Locator, Page,expect } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import BasePage from './base.page';
 
 enum Selectors {
@@ -19,6 +19,7 @@ enum Selectors {
   bookingsLink = '[data-cy="scheduled-meeting-sidebar-link"]',
   bookingsTableRow = '[data-cy="bookings-table"] tbody tr',
 }
+
 export default class MeetingPage extends BasePage {
   private originalPage: Page | undefined;
   constructor(page: Page) {
@@ -28,13 +29,14 @@ export default class MeetingPage extends BasePage {
   async profileIconIsVisible(timeoutInSeconds: number): Promise<boolean> {
     return this.isVisible(Selectors.profileIcon, timeoutInSeconds);
   }
+
   async getMeetingLinkByType(meetingType: string): Promise<Locator | null> {
     try {
       const selector = `[data-cy="continue-button"][href*="${meetingType}"]`;
       const linkElement = this.page.locator(selector);
       return linkElement;
     } catch (error) {
-      console.error(`Failed to get link : ${error}`);
+      console.error(`Failed to get link with href containing '${meetingType}': ${error}`);
       return null;
     }
   }
@@ -82,10 +84,6 @@ export default class MeetingPage extends BasePage {
       console.error(`Failed to create new meeting or verify details: ${error}`);
       throw new Error('Failed to create new meeting.');
     }
-  }
-
-  async assertTextContains(actualText: string, expectedText: string): Promise<void> {
-      expect(actualText).toContain(expectedText);
   }
 
   async createNewMeetingWithForm(newTab: Page, meetingName: string, date: string, clientName: string, email: string) {
@@ -161,5 +159,7 @@ export default class MeetingPage extends BasePage {
       throw error;
     }
   }
-  
+
+
+
 }
